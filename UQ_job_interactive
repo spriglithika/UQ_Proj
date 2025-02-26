@@ -1,0 +1,30 @@
+T=`date +%m%d%H%M`
+
+# -------------------------------------------------- #
+# Usually you only need to customize these variables #
+CFG=projects/configs/VAD/VAD_base.py                                               #
+GPUS=4                                              #
+# -------------------------------------------------- #
+GPUS_PER_NODE=4
+NNODES=1
+
+MASTER_PORT=${MASTER_PORT:-28596}
+MASTER_ADDR=${MASTER_ADDR:-"127.0.0.1"}
+RANK=${RANK:-0}
+
+WORK_DIR=/mimer/NOBACKUP/groups/alvis_cvl/hannahhe/UQ_Proj/outs/slurm/$T
+
+singularity exec --nv --pwd /mimer/NOBACKUP/groups/alvis_cvl/hannahhe/UQ_Proj/VAD \
+/mimer/NOBACKUP/groups/alvis_cvl/hannahhe/UQ_Proj/vad_will.sif  \
+python -m torch.distributed.launch \
+    --nproc_per_node=${GPUS_PER_NODE} \
+    --master_addr=${MASTER_ADDR} \
+    --master_port=${MASTER_PORT} \
+    --nnodes=${NNODES} \
+    --node_rank=${RANK} \
+    tools/train.py \
+    $CFG \
+    --launcher pytorch  \
+    --load-from ckpts/VAD_base.pth\
+    --work-dir ${WORK_DIR}
+

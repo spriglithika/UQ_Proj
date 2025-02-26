@@ -1,0 +1,3 @@
+cd /mimer/NOBACKUP/groups/alvis_cvl/hannahhe/VAD/VAD
+CUDA_VISIBLE_DEVICES=0 python tools/test.py projects/configs/VAD/VAD_base.py /mimer/NOBACKUP/groups/alvis_cvl/hannahhe/VAD --launcher none --eval bbox --tmpdir tmp
+CUDA_VISIBLE_DEVICES=0 python tools/test.py projects/configs/VAD/VAD_inference.py /mimer/NOBACKUP/groups/alvis_cvl/hannahhe/VAD/VAD/ckpts/VAD_base.pth --launcher none --eval bbox --tmpdir tmp

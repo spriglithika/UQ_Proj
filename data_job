@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#SBATCH -A NAISS2024-1-24 -p alvis
+#SBATCH -t 0-6:00:00
+#SBATCH -N 1 -c 2
+#SBATCH -C NOGPU
+#SBATCH --error=/mimer/NOBACKUP/groups/alvis_cvl/hannahhe/VAD/%j-%x.err
+#SBATCH --output=/mimer/NOBACKUP/groups/alvis_cvl/hannahhe/VAD/%j-%x.out
+
+apptainer exec vad_will.sif python VAD/tools/data_converter/vad_nuscenes_converter.py nuscenes --root-path /mimer/NOBACKUP/groups/alvis_cvl/datasets/nuScenes --out-dir /mimer/NOBACKUP/groups/alvis_cvl/hannahe/VAD/data --extra-tag vad_nuscenes --version v1.0 --canbus /mimer/NOBACKUP/groups/alvis_cvl/datasets/nuScenes
